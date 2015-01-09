@@ -16,7 +16,7 @@
         <td>Donuts sold PP</td>
       </tr>
       <form name="store1" action="getInputs" method="get">
-        <tr>     
+        <tr>
           <td><input id="0" type="text" name="location" /></td>
           <td><input id="1" type="text" name="trafficMin" /></td>
           <td><input id="2" type="text" name="trafficMax" /></td>
@@ -43,14 +43,13 @@
         <td>4-5PM </td>
         <td>5-6PM </td> -->
     </table>
-  
+
   </body>
 </html>
 
   <script>
     var retrieve = document.getElementById('button');
     retrieve.addEventListener('click', getStoreInputs, false);
-    var submitted = false;
     var stores = [];
     var downtown, capitolHill, southLakeUnion, wedgeWood, ballard;
     function getHourlyTraffic(min, max) {
@@ -90,8 +89,9 @@
       for(index in stores) {
         stores[index].getTotals();
         console.log(index)
-      } 
+      }
       generate_table();
+      stores = new Array();
     }
 
     function generate_table(location,donuts) {
@@ -109,12 +109,12 @@
           tblBody.appendChild(row);
         }
         tbl.appendChild(tblBody);
-        body.appendChild(tbl);      
+        body.appendChild(tbl);
       }
 
 
   </script>
 
-  
+
 
 
