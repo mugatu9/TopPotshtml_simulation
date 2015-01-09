@@ -62,7 +62,7 @@
       var hourlySales   = [];
       this.hourlySales  = hourlySales;
       this.location     = location;
-      this.conversion   = conversion;
+      this.conversion   = conversion / 100;
       this.donuts       = donuts;
       this.trafficMin   = trafficMin;
       this.trafficMax   = trafficMax;
@@ -101,11 +101,22 @@
         for (var j = 0; j < 1; j++) {
           var row = document.createElement("tr");
           for (var k = 0; k < 12; k++) {
-            var cell = document.createElement("td");
+            // var cell = document.createElement("td");
+            // var cellText = document.createTextNode(stores[0].hourlySales[k]);
+            // cell.appendChild(cellText);
+            // row.appendChild(cell);
+            if( k > 0 && k < 12) {
+              var message = document.createTextNode(stores[0].hourlySales[k] + " donuts sold this hour." + "   ");
+              row.appendChild(message);
+            }
+            else {
+              var cell = document.createElement("td");
             var cellText = document.createTextNode(stores[0].hourlySales[k]);
-              cell.appendChild(cellText);
-              row.appendChild(cell);
-                      }
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+            }
+
+          }
 
           tblBody.appendChild(row);
         }
