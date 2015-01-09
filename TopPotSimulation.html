@@ -4,7 +4,7 @@
 <head>
     <title>Adam's Top Pot Donut Merch Tool</title>
   </head>
-  <body>
+  <body id = "body">
     <h1>Top Pot Donuts Inventory Management</h1>
     <h2>Welcome! Please fill in the forms below. When you are done completing all forms, hit submit.</h2>
     <table>
@@ -12,24 +12,44 @@
         <td>Location</td>
         <td>Min Foot traffic:</td>
         <td>Max Foot traffic:</td>
-        <td>Conversion Rate:</td>
+        <td>% Conversion</td>
         <td>Donuts sold PP</td>
       </tr>
-      <tr>
-        <form name="Store1" action="getInputs" method="get">
+      <form name="store1" action="getInputs" method="get">
+        <tr>     
           <td><input id="0" type="text" name="location" /></td>
           <td><input id="1" type="text" name="trafficMin" /></td>
           <td><input id="2" type="text" name="trafficMax" /></td>
           <td><input id="3" type="text" name="conversion" /></td>
           <td><input id="4" type="text" name="donuts"/></td>
-      </tr>
+        </tr>
+      </form>
     </table>
-      <input type="button" id="button" name="submit" value="Submit"/>
-    </form>
+    <input type="button" id="button" name="submit" value="Submit"/>
+    <br>
+    <br>
+    <table id="donuts">
+      <thead><tr><th>Location</th></tr></thead>
+    <!--     <td>Location</td>
+        <td>7-8AM </td>
+        <td>8-9AM </td>
+        <td>9-10PM </td>
+        <td>10-11AM </td>
+        <td>11-12PM </td>
+        <td>12-1PM </td>
+        <td>1-2PM </td>
+        <td>2-3PM </td>
+        <td>3-4PM </td>
+        <td>4-5PM </td>
+        <td>5-6PM </td> -->
+    </table>
+  
   </body>
 </html>
 
   <script>
+    var retrieve = document.getElementById('button');
+    retrieve.addEventListener('click', getStoreInputs, false);
     var submitted = false;
     var stores = [];
     var downtown, capitolHill, southLakeUnion, wedgeWood, ballard;
@@ -58,27 +78,40 @@
     }
 
     function getStoreInputs() {
-      var i = 0;
+      var i = 1;
       var storeInputs = [];
+      storeInputs.push(document.getElementById(0).value);
       while (i < 5) {
-        storeInputs.push(document.getElementById(i).value);
-        i++
+        storeInputs.push(parseInt(document.getElementById(i).value));
+        i++;
       }
       console.log(storeInputs);
+      stores.push(new Branch("" + storeInputs[0],storeInputs[1],storeInputs[2],storeInputs[3],storeInputs[4]));
+      for(index in stores) {
+        stores[index].getTotals();
+        console.log(index)
+      } 
+      generate_table();
     }
-    
-    var retrieve = document.getElementById('button');
-    retrieve.addEventListener('click', getStoreInputs, false);
 
-    stores.push(new Branch("Downtown",        80,  220, .10,    4)); 
-    stores.push(new Branch("Capitol Hill",    5,   45,  .45,    2)); 
-    stores.push(new Branch("South Lake Union",180, 250, .05,    6)); 
-    stores.push(new Branch("Wedgewood",       20,  60,  .20,  1.5)); 
-    stores.push(new Branch("Ballard",         25,  175, .33,    1)); 
+    function generate_table(location,donuts) {
+        var body = document.getElementById("body");
+        var tbl = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+        for (var j = 0; j < 1; j++) {
+          var row = document.createElement("tr");
+          for (var k = 0; k < 11; k++) {
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(stores[0].hourlySales[k]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+          }
+          tblBody.appendChild(row);
+        }
+        tbl.appendChild(tblBody);
+        body.appendChild(tbl);      
+      }
 
-    for(index in stores) {
-      stores[index].getTotals();
-    }
 
   </script>
 
