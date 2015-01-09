@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Adam's Top Pot Donut Merch Tool</title>
+  </head>
+  <body id = "body">
+    <h1>Top Pot Donuts Inventory Management</h1>
+    <h2>Welcome! Please fill in the forms below. When you are done completing all forms, hit submit.</h2>
+    <table>
+      <tr>
+        <td>Location</td>
+        <td>Min Foot traffic:</td>
+        <td>Max Foot traffic:</td>
+        <td>% Conversion</td>
+        <td>Donuts sold PP</td>
+      </tr>
+      <form name="store1" action="getInputs" method="get">
+        <tr>     
+          <td><inputselect><select name="Location" id="0" style="visibility: visible;"><option class="Downtown">Downtown<option class="Capitol Hill">Capitol Hill<option class="South Lake Union">South Lake Union<option class="Wedgewood">Wedgewood<option class="Ballard">Ballard<option class=selected="true"></option></select></inputselect>
+          </td>
+          <td><input id="1" type="text" name="trafficMin" /></td>
+          <td><input id="2" type="text" name="trafficMax" /></td>
+          <td><input id="3" type="text" name="conversion" /></td>
+          <td><input id="4" type="text" name="donuts"/></td>
+        </tr>
+      </form>
+    </table>
+    <input type="button" id="button" name="submit" value="Submit"/>
+    <br>
+    <br>
+    <table id="donuts">
+      <thead><tr><th>Location</th></tr></thead>
+    <!--
+        <td>Location</td>
+        <td>7-8AM </td>
+        <td>8-9AM </td>
+        <td>9-10PM </td>
+        <td>10-11AM </td>
+        <td>11-12PM </td>
+        <td>12-1PM </td>
+        <td>1-2PM </td>
+        <td>2-3PM </td>
+        <td>3-4PM </td>
+        <td>4-5PM </td>
+        <td>5-6PM </td> 
+      -->
+    </table>
+  </body>
+</html>
+
+<script>
+    var retrieve = document.getElementById('button');
+    retrieve.addEventListener('click', getStoreInputs, false);
+    var submitted = false;
+    var stores = [];
+    var downtown, capitolHill, southLakeUnion, wedgeWood, ballard;
+    function getHourlyTraffic(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function Branch(location,trafficMin,trafficMax,conversion,donuts) {
+      var hoursOpen     = 11;
+      var currentHour   = 0;
+      var hourlySales   = [];
+      this.hourlySales  = hourlySales;
+      this.location     = location;
+      this.conversion   = conversion / 100;
+      this.donuts       = donuts;
+      this.trafficMin   = trafficMin;
+      this.trafficMax   = trafficMax;
+      this.getTotals    = function() {
+        this.hourlySales.push(this.location);
+        while (currentHour < hoursOpen) {
+          this.hourlySales.push(Math.ceil((getHourlyTraffic(trafficMin,trafficMax)) * this.conversion  * this.donuts))
+          currentHour++;
+        };
+        console.log(hourlySales);
+      }
+    }
+
+    function getStoreInputs() {
+      var i = 1;
+      var storeInputs = [];
+      storeInputs.push(document.getElementById(0).value);
+      while (i < 5) {
+        storeInputs.push(parseInt(document.getElementById(i).value));
+        i++;
+      }
+      console.log(storeInputs);
+      stores.push(new Branch("" + storeInputs[0],storeInputs[1],storeInputs[2],storeInputs[3],storeInputs[4]));
+      for(index in stores) {
+        stores[index].getTotals();
+        console.log(index)
+      } 
+      generate_table();
+      stores = new Array();
+    }
+
+    function generate_table(location,donuts) {
+        var body = document.getElementById("body");
+        var tbl = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+        for (var j = 0; j < 1; j++) {
+          var row = document.createElement("tr");
+          for (var k = 0; k < 12; k++) {
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(stores[0].hourlySales[k]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+          }
+          tblBody.appendChild(row);
+        }
+        tbl.appendChild(tblBody);
+        body.appendChild(tbl);      
+      }
+</script>
