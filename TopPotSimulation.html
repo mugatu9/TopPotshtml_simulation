@@ -4,7 +4,7 @@
 <head>
     <title>Adam's Top Pot Donut Merch Tool</title>
   </head>
-  <body>
+  <body id = "body">
     <h1>Top Pot Donuts Inventory Management</h1>
     <h2>Welcome! Please fill in the forms below. When you are done completing all forms, hit submit.</h2>
     <table>
@@ -15,7 +15,7 @@
         <td>% Conversion</td>
         <td>Donuts sold PP</td>
       </tr>
-      <form name="Store1" action="getInputs" method="get">
+      <form name="store1" action="getInputs" method="get">
         <tr>     
           <td><input id="0" type="text" name="location" /></td>
           <td><input id="1" type="text" name="trafficMin" /></td>
@@ -23,14 +23,14 @@
           <td><input id="3" type="text" name="conversion" /></td>
           <td><input id="4" type="text" name="donuts"/></td>
         </tr>
-        <input type="button" id="button" name="submit" value="Submit"/>
       </form>
     </table>
+    <input type="button" id="button" name="submit" value="Submit"/>
     <br>
     <br>
-    <table>
-      <tr>
-        <td>Location</td>
+    <table id="donuts">
+      <thead><tr><th>Location</th></tr></thead>
+    <!--     <td>Location</td>
         <td>7-8AM </td>
         <td>8-9AM </td>
         <td>9-10PM </td>
@@ -41,10 +41,8 @@
         <td>2-3PM </td>
         <td>3-4PM </td>
         <td>4-5PM </td>
-        <td>5-6PM </td>
-      </tr>
-      <tr name="outputRow1">
-        <td id=""
+        <td>5-6PM </td> -->
+    </table>
   
   </body>
 </html>
@@ -79,8 +77,6 @@
       }
     }
 
-    function 
-
     function getStoreInputs() {
       var i = 1;
       var storeInputs = [];
@@ -93,9 +89,30 @@
       stores.push(new Branch("" + storeInputs[0],storeInputs[1],storeInputs[2],storeInputs[3],storeInputs[4]));
       for(index in stores) {
         stores[index].getTotals();
+        console.log(index)
+      } 
+      generate_table();
+    }
+
+    function generate_table(location,donuts) {
+        var body = document.getElementById("body");
+        var tbl = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+        for (var j = 0; j < 1; j++) {
+          var row = document.createElement("tr");
+          for (var k = 0; k < 11; k++) {
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(stores[0].hourlySales[k]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+          }
+          tblBody.appendChild(row);
+        }
+        tbl.appendChild(tblBody);
+        body.appendChild(tbl);      
       }
-      console.log(stores);
-    }    
+
+
   </script>
 
   
