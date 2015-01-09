@@ -16,7 +16,7 @@
         <td>Donuts sold PP</td>
       </tr>
       <form name="store1" action="getInputs" method="get">
-        <tr>     
+        <tr>
           <td><input id="0" type="text" name="location" /></td>
           <td><input id="1" type="text" name="trafficMin" /></td>
           <td><input id="2" type="text" name="trafficMax" /></td>
@@ -43,14 +43,13 @@
         <td>4-5PM </td>
         <td>5-6PM </td> -->
     </table>
-  
+
   </body>
 </html>
 
   <script>
     var retrieve = document.getElementById('button');
     retrieve.addEventListener('click', getStoreInputs, false);
-    var submitted = false;
     var stores = [];
     var downtown, capitolHill, southLakeUnion, wedgeWood, ballard;
     function getHourlyTraffic(min, max) {
@@ -63,7 +62,7 @@
       var hourlySales   = [];
       this.hourlySales  = hourlySales;
       this.location     = location;
-      this.conversion   = conversion;
+      this.conversion   = conversion / 100;
       this.donuts       = donuts;
       this.trafficMin   = trafficMin;
       this.trafficMax   = trafficMax;
@@ -90,8 +89,9 @@
       for(index in stores) {
         stores[index].getTotals();
         console.log(index)
-      } 
+      }
       generate_table();
+      stores = new Array();
     }
 
     function generate_table(location,donuts) {
@@ -100,21 +100,33 @@
         var tblBody = document.createElement("tbody");
         for (var j = 0; j < 1; j++) {
           var row = document.createElement("tr");
-          for (var k = 0; k < 11; k++) {
-            var cell = document.createElement("td");
+          for (var k = 0; k < 12; k++) {
+            // var cell = document.createElement("td");
+            // var cellText = document.createTextNode(stores[0].hourlySales[k]);
+            // cell.appendChild(cellText);
+            // row.appendChild(cell);
+            if( k > 0 && k < 12) {
+              var message = document.createTextNode(stores[0].hourlySales[k] + " donuts sold this hour." + "   ");
+              row.appendChild(message);
+            }
+            else {
+              var cell = document.createElement("td");
             var cellText = document.createTextNode(stores[0].hourlySales[k]);
             cell.appendChild(cellText);
             row.appendChild(cell);
+            }
+
           }
+
           tblBody.appendChild(row);
         }
         tbl.appendChild(tblBody);
-        body.appendChild(tbl);      
+        body.appendChild(tbl);
       }
 
 
   </script>
 
-  
+
 
 
