@@ -100,12 +100,13 @@
         var tblBody = document.createElement("tbody");
         for (var j = 0; j < 1; j++) {
           var row = document.createElement("tr");
-          for (var k = 0; k < 11; k++) {
+          for (var k = 0; k < 12; k++) {
             var cell = document.createElement("td");
             var cellText = document.createTextNode(stores[0].hourlySales[k]);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-          }
+              cell.appendChild(cellText);
+              row.appendChild(cell);
+                      }
+
           tblBody.appendChild(row);
         }
         tbl.appendChild(tblBody);
