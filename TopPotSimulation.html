@@ -1,5 +1,34 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <title>Adam's Top Pot Donut Merch Tool</title>
+  </head>
+  <body>
+    <h1>Top Pot Donuts Inventory Management</h1>
+    <h2>Welcome! Please fill in the forms below. When you are done completing all forms, hit submit.</h2>
+    <table>
+      <tr>
+        <td>Location</td>
+        <td>Min Foot traffic:</td>
+        <td>Max Foot traffic:</td>
+        <td>Conversion Rate:</td>
+        <td>Donuts sold PP</td>
+      </tr>
+      <tr>
+        <form name="Store1" action="getInputs" method="get">
+          <td><input id="0" type="text" name="location" /></td>
+          <td><input id="1" type="text" name="trafficMin" /></td>
+          <td><input id="2" type="text" name="trafficMax" /></td>
+          <td><input id="3" type="text" name="conversion" /></td>
+          <td><input id="4" type="text" name="donuts"/></td>
+      </tr>
+    </table>
+      <input type="button" id="button" name="submit" value="Submit"/>
+    </form>
+  </body>
+</html>
+
   <script>
     var submitted = false;
     var stores = [];
@@ -29,17 +58,17 @@
     }
 
     function getStoreInputs() {
-      var i = 0
+      var i = 0;
+      var storeInputs = [];
       while (i < 5) {
-        var storeInputs = [];
-        storetInputs.push(document.getElementById(i));
+        storeInputs.push(document.getElementById(i).value);
         i++
       }
       console.log(storeInputs);
     }
     
-    
-    // Need a user-inputted trigger to retrieve and store the inputs (call getInputs function)
+    var retrieve = document.getElementById('button');
+    retrieve.addEventListener('click', getStoreInputs, false);
 
     stores.push(new Branch("Downtown",        80,  220, .10,    4)); 
     stores.push(new Branch("Capitol Hill",    5,   45,  .45,    2)); 
@@ -53,22 +82,6 @@
 
   </script>
 
-  <head>
-    <title>Adam's Top Pot Donut Merch Tool</title>
-  </head>
-  <body>
-    <h1>Top Pot Donuts Inventory Management</h1>
-    <h2>Welcome! Please fill in the forms below. When you are done completing all forms, hit submit.</h2>
-    <form id = "0" name="Store1" action="getInputs" method="get">
-      Store Location:              <input id="0" type="text" name="location" /><br />
-      Minimum Hourly Foot traffic: <input id="1" type="text" name="trafficMin" /><br />
-      Maximum Hourly Foot traffic: <input id="2" type="text" name="trafficMax" /><br />
-      Conversion Rate:             <input id="3" type="text" name="conversion" /><br />
-      Number of donuts sold PP     <input id="4" type="text" name="donuts"/><br />
-      <input type="button" name="submit" value="Submit" onClick="getStoreInputs(this.form)"/>
-    </form>
-    <table>
-  </body>
-</html>
+  
 
 
