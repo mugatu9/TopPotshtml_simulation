@@ -4,28 +4,31 @@
 <head>
     <title>Adam's Top Pot Donut Merch Tool</title>
   </head>
-  <body id = "body">
+  <body>
     <h1>Top Pot Donuts Inventory Management</h1>
     <h2>Welcome! Please fill in the forms below. When you are done completing all forms, hit submit.</h2>
-    <table>
-      <tr>
-        <td>Location</td>
-        <td>Min Foot traffic:</td>
-        <td>Max Foot traffic:</td>
-        <td>% Conversion</td>
-        <td>Donuts sold PP</td>
-      </tr>
-      <form name="store1" action="getInputs" method="get">
-        <tr>     
-          <td><input id="0" type="text" name="location" /></td>
-          <td><input id="1" type="text" name="trafficMin" /></td>
-          <td><input id="2" type="text" name="trafficMax" /></td>
-          <td><input id="3" type="text" name="conversion" /></td>
-          <td><input id="4" type="text" name="donuts"/></td>
+    <table id="stores" action="getInputs" method="get">
+      <tbody>
+        <tr>
+          <td>Location</td>
+          <td>Min Foot traffic:</td>
+          <td>Max Foot traffic:</td>
+          <td>% Conversion</td>
+          <td>Donuts sold PP</td>
         </tr>
-      </form>
+        <tr class = "inputs">     
+          <td><input type="text" name="location" /></td>
+          <td><input type="text" name="trafficMin" /></td>
+          <td><input type="text" name="trafficMax" /></td>
+          <td><input type="text" name="conversion" /></td>
+          <td><input type="text" name="donuts"/></td>
+        </tr>
+        <tr class = "inputs">
+          <td><input type="button" name="submit" value="Submit"/></td>
+        </tr>
+      </tbody>
     </table>
-    <input type="button" id="button" name="submit" value="Submit"/>
+    
     <br>
     <br>
     <table id="donuts">
@@ -48,8 +51,10 @@
 </html>
 
   <script>
-    var retrieve = document.getElementById('button');
-    retrieve.addEventListener('click', getStoreInputs, false);
+    var retrieve = document.getElementById('stores');
+    retrieve.addEventListener('click', function(e) {
+      getStoreInputs(e);
+    }, false);
     var submitted = false;
     var stores = [];
     var downtown, capitolHill, southLakeUnion, wedgeWood, ballard;
@@ -77,22 +82,44 @@
       }
     }
 
-    function getStoreInputs() {
-      var i = 1;
-      var storeInputs = [];
-      storeInputs.push(document.getElementById(0).value);
-      while (i < 5) {
-        storeInputs.push(parseInt(document.getElementById(i).value));
-        i++;
+    // Declare function to create arrays from inputs
+    function getStoreInputs(e) {
+      var target; 
+      var stores = [];
+      target = e.target;
+      // Prevents any other elements from triggering function except submit button
+      if (target.type == "button") {
+        var storeTypes = document.querySelectorAll("tr.inputs");
+        // Convert Nodelist into Array
+        for ( i = 0, ref = stores.length = storeTypes.length; i < ref; i++) {
+          stores[i] = storeTypes[i];  
+        }
+        console.log(stores);
+        for (j = 0; j < 5; j++); {
+          stores[j] =  (document.querySelectorAll(":scope > td"));
+        }
+        console.log(stores[0]);
+
+        // Cycles through all child objects and adds to arry
+        console.log(stores);
       }
-      console.log(storeInputs);
-      stores.push(new Branch("" + storeInputs[0],storeInputs[1],storeInputs[2],storeInputs[3],storeInputs[4]));
-      for(index in stores) {
-        stores[index].getTotals();
-        console.log(index)
-      } 
-      generate_table();
     }
+
+      // var i = 1;
+      // var storeInputs = [];
+      // storeInputs.push(document.getElementById(0).value);
+      // while (i < 5) {
+      //   storeInputs.push(parseInt(document.getElementById(i).value));
+      //   i++;
+      // }
+      // console.log(storeInputs);
+      // stores.push(new Branch("" + storeInputs[0],storeInputs[1],storeInputs[2],storeInputs[3],storeInputs[4]));
+      // for(index in stores) {
+      //   stores[index].getTotals();
+      //   console.log(index)
+      // } 
+      //   generate_table();
+      // }
 
     function generate_table(location,donuts) {
         var body = document.getElementById("body");
